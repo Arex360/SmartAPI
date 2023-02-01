@@ -34,4 +34,8 @@ let getTimer = async (clientID,timer)=>{
   const data = await ref.get()
   return data.val()
 }
-module.exports = {setPin,getPin,setTimer,getTimer}
+let setWeather = async (clientID,temp,hum)=>{
+  const ref = db.ref("env/"+clientID)
+  await ref.set({temp,hum})
+}
+module.exports = {setPin,getPin,setTimer,getTimer,setWeather}

@@ -1,4 +1,4 @@
-const {getPin,setPin,getTimer,setTimer}= require('./backend')
+const {getPin,setPin,getTimer,setTimer,setWeather}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
@@ -35,6 +35,12 @@ app.get('/getTimer/:clientID/',async (req,res)=>{
     res.send(data)
    else
     res.send(3000)
+})
+
+app.get("/setEnv/:clientID/:temp/:hum",async (req,res)=>{
+  const {hum,temp,clientID} = req.params
+  await setWeather(clientID,hum,temp)
+  res.send("done")
 })
 app.listen(3000,()=>{
   console.log('server started')
