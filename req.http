@@ -1,0 +1,11 @@
+POST https://wordserver.vercel.app/getImg HTTP/1.1
+content-type: application/json
+
+{
+    "username":"ssk",
+    "email":"104957079246508734084",
+    "url":"123",
+    "password":"sdsdsd29837290",
+    "coins":0,
+    "point":0
+}

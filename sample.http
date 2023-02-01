@@ -1,0 +1,10 @@
+POST https://wordserver.vercel.app/register HTTP/1.1
+content-type: application/json
+
+{
+  "username":"sjksdjl",
+  "email":"test3@gmail.com",
+  "password":"jsksdjlds",
+  "coins":"0",
+  "point":"0"
+}

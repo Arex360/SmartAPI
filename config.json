@@ -1,0 +1,11 @@
+{
+    "apiKey": "AIzaSyDdoZNCdUJLilodWTDFFT9Qwe-lxeC92ek",
+    "keyFileName": "./key.json",
+    "authDomain": "wordpuzzle-69640.firebaseapp.com",
+    "databaseURL": "https://wordpuzzle-69640-default-rtdb.firebaseio.com",
+    "projectId": "wordpuzzle-69640",
+    "storageBucket": "wordpuzzle-69640.appspot.com",
+    "messagingSenderId": "1058291786842",
+    "appId": "1:1058291786842:web:80c4eab8ac40a2da8ee463",
+    "measurementId": "G-TMFG368WQ5"
+  }
