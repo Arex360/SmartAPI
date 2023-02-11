@@ -67,7 +67,7 @@ app.get('/setTimer/:clientID/:timer', async (req,res)=>{
   const data = await setTimer(clientID,timer)
   res.send("updated")
 })
-app.get('/getTimer/:clientID/',async (req,res)=>{
+app.get('/getTimer/:clientID',async (req,res)=>{
    const {clientID,timer} = req.params
    const data = await getTimer(clientID,timer)
    if(data)
