@@ -53,11 +53,11 @@ const getPin = async (clientID,pinID)=>{
   return data.val()
 }
 const setTimer = async (clientID,timer)=>{
-  const ref = db.ref("config/"+clientID +'/'+timer)
+  const ref = db.ref("config/"+clientID +'/timer')
   await ref.set({timer})
 }
-let getTimer = async (clientID,timer)=>{
-  const ref = db.ref("config/"+clientID +'/'+timer)
+let getTimer = async (clientID)=>{
+  const ref = db.ref("config/"+clientID +'/timer')
   const data = await ref.get()
   return data.val()
 }
