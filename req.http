@@ -1,4 +1,4 @@
-POST https://wordserver.vercel.app/getImg HTTP/1.1
+GET http://localhost:3001/getHumidity/client1 HTTP/1.1
 content-type: application/json
 
 {
