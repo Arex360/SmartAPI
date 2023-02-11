@@ -1,4 +1,4 @@
-GET http://localhost:3001/getTimer/client1 HTTP/1.1
+GET http://localhost:3001/getMode/client1 HTTP/1.1
 content-type: application/json
 
 {

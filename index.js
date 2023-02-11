@@ -1,4 +1,4 @@
-const {getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage}= require('./backend')
+const {getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
@@ -19,6 +19,20 @@ app.get('/setCurrent/:clientID/:state',async (req,res)=>{
   const {clientID,state} = req.params
   await setCurrent(clientID,state)
   res.send('done')
+})
+app.get('/setMode/:clientID/:value',async (req,res)=>{
+  const {clientID,value} = req.params
+  await setMode(clientID,value)
+  res.send("done")
+})
+app.get('/getMode/:clientID',async(req,res)=>{
+  const {clientID} = req.params
+  const data = await getMode(clientID)
+  if(data){
+    res.send(data.mode)
+  }else{
+    res.send(0)
+  }
 })
 app.get('/setBrightness/:clientID/:state',async (req,res)=>{
   const {clientID,state} = req.params
