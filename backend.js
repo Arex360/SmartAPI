@@ -72,6 +72,8 @@ let getTimer = async (clientID)=>{
 }
 let setWeather = async (clientID,temp,hum)=>{
   const ref = db.ref("env/"+clientID)
+  const timeRef = db.ref("env/"+clientID+"/time")
+  await timeRef.set({timestamp: new Date().toString()})
   await ref.set({temp,hum})
 }
 let getTempreture = async (clientID)=>{
