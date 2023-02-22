@@ -80,7 +80,7 @@ let setWeather = async (clientID,temp,hum)=>{
   const minutes = now.getMinutes().toString().padStart(2, '0');
   const seconds = now.getSeconds().toString().padStart(2, '0');
   const timestamp = `${hours}:${minutes}:${seconds}`
-  const date = now.toDateStringString()
+  const date = now.toDateString()
   await ref.set({temp,hum,timestamp,date})
   await archeive.push({temp,hum,timestamp,date})
 }
