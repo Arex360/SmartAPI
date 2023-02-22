@@ -79,9 +79,10 @@ let setWeather = async (clientID,temp,hum)=>{
   const hours = now.getHours().toString().padStart(2, '0');
   const minutes = now.getMinutes().toString().padStart(2, '0');
   const seconds = now.getSeconds().toString().padStart(2, '0');
-  const timestamp = `${hours}:${minutes}:${seconds}`;
-  await ref.set({temp,hum,timestamp})
-  await archeive.push({temp,hum,timestamp})
+  const timestamp = `${hours}:${minutes}:${seconds}`
+  const date = now.toDateStringString()
+  await ref.set({temp,hum,timestamp,date})
+  await archeive.push({temp,hum,timestamp,date})
 }
 let getTempreture = async (clientID)=>{
   const ref = db.ref("env/"+clientID+'/temp')
