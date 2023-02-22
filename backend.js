@@ -85,7 +85,7 @@ let setWeather = async (clientID,temp,hum)=>{
   md5Hash.update(timestamp);
   const hexHash = md5Hash.digest('hex');
   const archeive = db.ref("history/"+hexHash)
-  await archeive.set({temp,hum,timestamp,date})
+  await archeive.set({temp,hum,timestamp,date,clientID})
 }
 let getTempreture = async (clientID)=>{
   const ref = db.ref("env/"+clientID+'/temp')
