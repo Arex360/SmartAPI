@@ -1,7 +1,7 @@
 const admin = require('firebase-admin');
 const config = require('./config.json');
 const key = require('./key.json')
-
+const crypto = require('crypto');
 admin.initializeApp({
   credential: admin.credential.cert(key),
   apiKey: "AIzaSyB63hasxMxZ5OsU31VMQymmgJ5UgqbRxck",
@@ -72,7 +72,6 @@ let getTimer = async (clientID)=>{
 }
 let setWeather = async (clientID,temp,hum)=>{
   const ref = db.ref("env/"+clientID)
-  const archeive = db.ref("env/"+clientID+"/arch")
   const now = new Date();
 
 // Extract only the time portion
@@ -82,7 +81,11 @@ let setWeather = async (clientID,temp,hum)=>{
   const timestamp = `${hours}:${minutes}:${seconds}`
   const date = now.toDateString()
   await ref.set({temp,hum,timestamp,date})
-  await archeive.push({temp,hum,timestamp,date})
+  const md5Hash = crypto.createHash('md5');
+  md5Hash.update(timestamp);
+  const hexHash = md5Hash.digest('hex');
+  const archeive = db.ref("env/"+clientID+"/arch/"+hexHash)
+  await archeive.set({temp,hum,timestamp,date})
 }
 let getTempreture = async (clientID)=>{
   const ref = db.ref("env/"+clientID+'/temp')
