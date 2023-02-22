@@ -73,7 +73,13 @@ let getTimer = async (clientID)=>{
 let setWeather = async (clientID,temp,hum)=>{
   const ref = db.ref("env/"+clientID)
   const archeive = db.ref("env/"+clientID+"/arch")
-  const timestamp=  new Date().toString()
+  const now = new Date();
+
+// Extract only the time portion
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  const timestamp = `${hours}:${minutes}:${seconds}`;
   await ref.set({temp,hum,timestamp})
   await archeive.push({temp,hum,timestamp})
 }
