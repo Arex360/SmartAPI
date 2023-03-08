@@ -4,6 +4,7 @@ const crypto = require('crypto')
 const bodyparser = require('body-parser')
 const cors = require('cors')
 const { firestore } = require('firebase-admin')
+const fs = require('fs')
 const app = express()
 app.use(cors())
 app.use(bodyparser())
@@ -112,6 +113,17 @@ app.get("/getHumidity/:clientID",async (req,res)=>{
   }else{
     res.send(0)
   }
+})
+app.post('/log/:clientID',(req,res)=>{
+  const {clientID} = req.params
+  const {msg} = req.body
+  fs.appendFileSync(`${clientID}.txt`,new Date().toString()+ msg+"\n")
+
+  res.status(200).send('Log stored successfully')
+})
+app.get('/checkLog/:clientID',(req,res)=>{
+  const {clientID} = req.params
+  res.sendFile(__dirname+'/'+clientID+".txt")
 })
 app.listen(3001,()=>{
   console.log('server started')
