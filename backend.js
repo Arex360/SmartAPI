@@ -2,6 +2,9 @@ const admin = require('firebase-admin');
 const config = require('./config.json');
 const key = require('./key.json')
 const crypto = require('crypto');
+const os = require('os');
+const fs = require('fs');
+const _months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 admin.initializeApp({
   credential: admin.credential.cert(key),
   apiKey: "AIzaSyB63hasxMxZ5OsU31VMQymmgJ5UgqbRxck",
@@ -86,6 +89,23 @@ let setWeather = async (clientID,temp,hum)=>{
   const hexHash = md5Hash.digest('hex');
   const archeive = db.ref("history/"+hexHash)
   await archeive.set({temp,hum,timestamp,date,clientID})
+  const month = _months[now.getMonth()];
+  if (!fs.existsSync(month)) {
+    fs.mkdirSync(month);
+    console.log(`Folder ${month} created successfully`);
+  } else {
+    console.log(`Folder ${month} already exists`);
+  }
+  if (!fs.existsSync(month+'/'+clientID.toString())) {
+    fs.mkdirSync((month+'/'+clientID.toString()));
+    console.log(`Folder ${month} created successfully`);
+  } else {
+    console.log(`Folder ${month} already exists`);
+  }
+  const filename = now.getDate()+".json"
+  const data = {temp,hum}
+  fs.writeFileSync(`${month}/${clientID}/${filename}`, JSON.stringify(data));
+
 }
 let getTempreture = async (clientID)=>{
   const ref = db.ref("env/"+clientID+'/temp')
