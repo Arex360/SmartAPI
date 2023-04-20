@@ -63,6 +63,15 @@ const setMode = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/mode')
   await ref.set({mode})
 }
+const setBoxState = async(clientID,state)=>{
+  const ref = db.ref("config/"+clientID+'/boxState')
+  await ref.set(state)
+}
+const getBoxState = async (clientID)=>{
+  const ref = db.ref("config/"+clientID+'/boxState')
+  const data = await ref.get()
+  return data.val()
+}
 const getMode = async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/mode')
   const data = await ref.get()
@@ -117,4 +126,4 @@ let getHumidity = async (clientID)=>{
   const data = await ref.get()
   return data.val()
 }
-module.exports = {setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+module.exports = {setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
