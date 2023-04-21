@@ -155,7 +155,7 @@ const getWeather = async (clientID) => {
     console.error(error);
   }
   fs.writeFileSync(`${clientID}.json`,JSON.stringify(data))
-  execSync(`python chart.py ${clientID}.json`)
+  execSync(`python3 chart.py ${clientID}.json`)
   return data;
 };
 
