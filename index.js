@@ -109,7 +109,8 @@ app.get("/setEnv/:clientID/:temp/:hum",async (req,res)=>{
 app.get('/getWeather/:clientID',async (req,res)=>{
   const {clientID} = req.params 
   const data = await getWeather(clientID)
-  res.send(data)
+  //res.send(data)
+  res.sendFile(__dirname+'/'+clientID+".json.png")
 })
 app.get("/getTempreture/:clientID",async (req,res)=>{
   const {clientID} = req.params

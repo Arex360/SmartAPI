@@ -4,6 +4,7 @@ const key = require('./key.json')
 const crypto = require('crypto');
 const os = require('os');
 const fs = require('fs');
+const { execSync } = require('child_process');
 const _months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 admin.initializeApp({
   credential: admin.credential.cert(key),
@@ -153,7 +154,8 @@ const getWeather = async (clientID) => {
   } catch (error) {
     console.error(error);
   }
-
+  fs.writeFileSync(`${clientID}.json`,JSON.stringify(data))
+  execSync(`python chart.py ${clientID}.json`)
   return data;
 };
 
