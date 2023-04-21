@@ -126,4 +126,41 @@ let getHumidity = async (clientID)=>{
   const data = await ref.get()
   return data.val()
 }
-module.exports = {setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+const getWeather = async (clientID) => {
+  const now = new Date();
+  const month = _months[now.getMonth()];
+  const data = [];
+
+  try {
+    for (let day = 1; day <= now.getDate(); day++) {
+      const filename = day + ".json";
+      const filePath = `${month}/${clientID}/${filename}`;
+
+      if (fs.existsSync(filePath)) {
+        const jsonData = fs.readFileSync(filePath);
+        const parsedData = JSON.parse(jsonData);
+
+        // Construct date object from filename
+        const date = new Date(now.getFullYear(), now.getMonth(), day);
+        let dateString = date.toString()
+        dateString = dateString.substring(8,10)
+        // Check if date is within range
+        if (date >= getStartDate() && date <= now) {
+          data.push({ temp: parsedData.temp, hum: parsedData.hum, date:dateString });
+        }
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  return data;
+};
+
+// Helper function to get the start date of the current month
+const getStartDate = () => {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), 1);
+};
+
+module.exports = {getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
