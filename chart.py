@@ -16,8 +16,8 @@ with open(args.filename, 'r') as f:
     data = json.load(f)
 
 dates = [int(d['date']) for d in data]
-temps = [float(d['temp']) for d in data]
-hums = [float(d['hum']) for d in data]
+temps = [float(d['temp'])/10 for d in data]
+hums = [float(d['hum'])/10 for d in data]
 
 plt.plot(dates, temps, label='Temperature')
 plt.plot(dates, hums, label='Humidity')
