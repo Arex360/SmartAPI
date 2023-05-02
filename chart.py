@@ -19,8 +19,8 @@ dates = [int(d['date']) for d in data]
 temps = [float(d['hum'])/10 for d in data]
 hums = [float(d['temp'])/10 for d in data]
 
-plt.plot(dates, temps, label='Temperature')
-plt.plot(dates, hums, label='Humidity')
+plt.bar(dates, temps, label='Temperature')
+plt.bar(dates, hums, label='Humidity')
 
 plt.xlabel('Date')
 plt.xticks(range(min(dates), max(dates)+1))
