@@ -201,7 +201,7 @@ const getWeather = async (clientID) => {
   fs.writeFileSync(`${clientID}.json`,JSON.stringify(data))
   fs.writeFileSync(`c${clientID}.json`,JSON.stringify(cData))
   console.log(JSON.stringify(data))
-  execSync(`python chart.py ${clientID}.json c${clientID}.json`)
+  execSync(`python3 chart.py ${clientID}.json c${clientID}.json`)
   return data;
 };
 
