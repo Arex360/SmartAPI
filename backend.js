@@ -117,6 +117,34 @@ let setWeather = async (clientID,temp,hum)=>{
   fs.writeFileSync(`${month}/${clientID}/${filename}`, JSON.stringify(data));
 
 }
+let setCount = async (clientID,count)=>{
+  const ref = db.ref("env/"+clientID)
+  const now = new Date();
+
+// Extract only the time portion
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  const timestamp = `${hours}:${minutes}:${seconds}`
+  const date = now.toDateString()
+  const month = _months[now.getMonth()];
+  if (!fs.existsSync(month)) {
+    fs.mkdirSync(month);
+    console.log(`Folder ${month} created successfully`);
+  } else {
+    console.log(`Folder ${month} already exists`);
+  }
+  if (!fs.existsSync(month+'/'+clientID.toString())) {
+    fs.mkdirSync((month+'/'+clientID.toString()));
+    console.log(`Folder ${month} created successfully`);
+  } else {
+    console.log(`Folder ${month} already exists`);
+  }
+  const filename = "c"+now.getDate()+".json"
+  const data = {count}
+  fs.writeFileSync(`${month}/${clientID}/${filename}`, JSON.stringify(data));
+
+}
 let getTempreture = async (clientID)=>{
   const ref = db.ref("env/"+clientID+'/temp')
   const data = await ref.get()
@@ -131,12 +159,13 @@ const getWeather = async (clientID) => {
   const now = new Date();
   const month = _months[now.getMonth()];
   const data = [];
-
+  const cData = []
   try {
     for (let day = 1; day <= now.getDate(); day++) {
       const filename = day + ".json";
+      const cFileName = "c"+day+".json"
       const filePath = `${month}/${clientID}/${filename}`;
-
+      const cFilePath =  `${month}/${clientID}/${cFileName}`
       if (fs.existsSync(filePath)) {
         const jsonData = fs.readFileSync(filePath);
         const parsedData = JSON.parse(jsonData);
@@ -150,13 +179,29 @@ const getWeather = async (clientID) => {
           data.push({ temp: parsedData.temp, hum: parsedData.hum, date:dateString });
         }
       }
+      if (fs.existsSync(cFilePath)) {
+        const jsonData = fs.readFileSync(cFilePath);
+        const parsedData = JSON.parse(jsonData);
+
+        // Construct date object from filename
+        const date = new Date(now.getFullYear(), now.getMonth(), day);
+        let dateString = date.toString()
+        dateString = dateString.substring(8,10)
+        // Check if date is within range
+        if (date >= getStartDate() && date <= now) {
+          cData.push({ count: parsedData.count, date:dateString });
+        }
+      }
+
+
     }
   } catch (error) {
     console.error(error);
   }
   fs.writeFileSync(`${clientID}.json`,JSON.stringify(data))
+  fs.writeFileSync(`c${clientID}.json`,JSON.stringify(cData))
   console.log(JSON.stringify(data))
-  execSync(`python3 chart.py ${clientID}.json`)
+  execSync(`python chart.py ${clientID}.json c${clientID}.json`)
   return data;
 };
 
@@ -166,4 +211,4 @@ const getStartDate = () => {
   return new Date(now.getFullYear(), now.getMonth(), 1);
 };
 
-module.exports = {getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+module.exports = {setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
