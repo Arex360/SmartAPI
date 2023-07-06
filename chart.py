@@ -17,8 +17,8 @@ with open(args.filename, 'r') as f:
 with open(args.count,'r') as f:
     countData = json.load(f)
 dates = [int(d['date']) for d in data]
-temps = [float(d['hum'])/10 for d in data]
-hums = [float(d['temp'])/10 for d in data]
+temps = [float(d['hum'])/1 for d in data]
+hums = [float(d['temp'])/1 for d in data]
 
 cDates = [int(d['date']) for d in countData]
 cCount = [int(d['count']) for d in countData]
