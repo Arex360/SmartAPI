@@ -139,10 +139,19 @@ let setCount = async (clientID,count)=>{
     console.log(`Folder ${month} created successfully`);
   } else {
     console.log(`Folder ${month} already exists`);
+
   }
   const filename = "c"+now.getDate()+".json"
   const data = {count}
-  fs.writeFileSync(`${month}/${clientID}/${filename}`, JSON.stringify(data));
+  let parsedJson = {}
+  let _count = 0
+  if(fs.existsSync(`${month}/${clientID}/${filename}`)){
+    const jsonData = fs.readFileSync(`${month}/${clientID}/${filename}`)
+    parsedJson = JSON.parse(jsonData)
+    _count = parsedJson.count
+  }
+  if(count > _count)
+    fs.writeFileSync(`${month}/${clientID}/${filename}`, JSON.stringify(data));
 
 }
 let getTempreture = async (clientID)=>{
