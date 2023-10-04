@@ -16,7 +16,7 @@ app.get('/',(req,res)=>res.send('welcome'))
 app.get('/DownloadCSV/:month/:client',(req,res)=>{
   const {client,month} =req.params
   console.log(`${client} is power`)
-  execSync(`python CSVReport.py ${month}/${client}`)
+  execSync(`python3 CSVReport.py ${month}/${client}`)
   const csvFilePath = path.join(__dirname, 'merged_data.csv');
   // Check if the file exists
   if (fs.existsSync(csvFilePath)) {
