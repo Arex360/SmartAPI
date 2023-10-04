@@ -219,5 +219,8 @@ const getStartDate = () => {
   const now = new Date();
   return new Date(now.getFullYear(), now.getMonth(), 1);
 };
-
-module.exports = {setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+const GetCSV = (clientName,Month,res)=>{
+  console.log( `Command: python CSVReport.py ${Month/clientName}`)
+  
+}
+module.exports = {GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}

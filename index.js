@@ -1,16 +1,39 @@
-const {getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount}= require('./backend')
+const {GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
 const cors = require('cors')
 const { firestore } = require('firebase-admin')
 const fs = require('fs')
+const { execSync } = require('child_process')
+const path = require('path')
 const app = express()
 app.use(cors())
 app.use(bodyparser())
 const date = new Date()
 //console.log(date.getDate())
 app.get('/',(req,res)=>res.send('welcome'))
+app.get('/DownloadCSV/:month/:client',(req,res)=>{
+  const {client,month} =req.params
+  console.log(`${client} is power`)
+  execSync(`python CSVReport.py ${month}/${client}`)
+  const csvFilePath = path.join(__dirname, 'merged_data.csv');
+  // Check if the file exists
+  if (fs.existsSync(csvFilePath)) {
+    // Set response headers to specify the file type and attachment
+    res.setHeader('Content-Disposition', 'attachment; filename="sample.csv"');
+    res.setHeader('Content-Type', 'text/csv');
+
+    // Create a read stream to send the file
+    const fileStream = fs.createReadStream(csvFilePath);
+
+    // Pipe the file stream to the response
+    fileStream.pipe(res);
+  } else {
+    // If the file does not exist, send a 404 response
+    res.status(404).send('File not found');
+  }
+})
 app.get('/setPinState/:clientID/:pinId/:state',async (req,res)=>{
   const {clientID,pinId,state} = req.params
   await setPin(clientID,pinId,state)
