@@ -1,4 +1,4 @@
-const {GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount}= require('./backend')
+const {getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
@@ -168,6 +168,27 @@ app.post('/log/:clientID',(req,res)=>{
 app.get('/checkLog/:clientID',(req,res)=>{
   const {clientID} = req.params
   res.sendFile(__dirname+'/'+clientID+".txt")
+})
+app.get('/getBattery/:clientID', async (req,res)=>{
+  const {clientID} = req.params
+  const {mode} = await getBattery(clientID)
+  res.send(mode)
+})
+app.get('/getServo/:clientid', async (req,res)=>{
+  const {clientid} = req.params
+  const {mode} = await getServo(clientid)
+  res.send(mode)
+})
+app.get('/setBattery/:clientID/:ammount',async (req,res)=>{
+  const {ammount,clientID} = req.params
+  const result = await setBattery(clientID,ammount)
+  res.send("done")
+})
+app.get('/setServo/:clientid/:mode',async (req,res)=>{
+  console.log("servo")
+  const {clientid,mode} = req.params
+  const result = await setServo(clientid,mode)
+  res.send("done")
 })
 app.listen(3001,()=>{
   console.log('server started')

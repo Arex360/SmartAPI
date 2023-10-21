@@ -223,4 +223,27 @@ const GetCSV = (clientName,Month,res)=>{
   console.log( `Command: python CSVReport.py ${Month/clientName}`)
   
 }
-module.exports = {GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+const setBattery = async (clientID,mode)=>{
+  const ref = db.ref("config/"+clientID +'/battery')
+  await ref.set({mode})
+}
+const setServo = async (clientID,mode)=>{
+  const ref = db.ref("config/"+clientID +'/servo')
+  await ref.set({mode})
+}
+
+const getBattery = async (clientID)=>{
+  const ref = db.ref("config/"+clientID +'/battery')
+  const data = await ref.get()
+  return data.val()
+}
+const getServo = async (clientID)=>{
+  const ref = db.ref("config/"+clientID +'/servo')
+  const data = await ref.get()
+  return data.val()
+}
+
+
+
+
+module.exports = {setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
