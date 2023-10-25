@@ -299,8 +299,8 @@ const setAllDataV2 = async({timer,brightness},clientID)=>{
 
 }
 const getAllDatav2 = async (clientID)=>{
-  let timer = get_Timer(clientID)
-  let brightness = get_brightness(clientID)
+  let timer = await get_Timer(clientID)
+  let brightness = await get_brightness(clientID)
   return ({timer,brightness})
 }
 
