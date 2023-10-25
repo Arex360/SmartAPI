@@ -241,7 +241,10 @@ const set_timer = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/timer')
   await ref.set({mode})
 }
-
+const set_brightness = async (clientID,mode)=>{
+  const ref = db.ref("config/"+clientID +'/brightness')
+  await ref.set({mode})
+}
 const setServo = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/servo')
   await ref.set({mode})
@@ -277,12 +280,28 @@ const get_Timer= async (clientID)=>{
   const {mode} = data.val()
   return mode
 }
+const get_brightness= async (clientID)=>{
+  const ref = db.ref("config/"+clientID +'/brightness')
+  const data = await ref.get()
+  const {mode} = data.val()
+  return mode
+}
 const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},clientID)=>{
    await setBattery(clientID,battery)
    await setServo(clientID,ServoStatus)
    await setTemp(clientID,temprature)
    await setHum(clientID,humidity)
    await set_timer(clientID,timer)
+}
+const setAllDataV2 = async({timer,brightness},clientID)=>{
+  await set_timer(clientID,timer)
+  await set_brightness(clientID,brightness)
+
+}
+const getAllDatav2 = async (clientID)=>{
+  let timer = get_Timer(clientID)
+  let brightness = get_brightness(clientID)
+  return ({timer,brightness})
 }
 
 const getAllData = async(clientID)=>{
@@ -294,4 +313,4 @@ const getAllData = async(clientID)=>{
   return {servo,battery,temp,hum,timer}
 }
 
-module.exports = {getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+module.exports = {setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}

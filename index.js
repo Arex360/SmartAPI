@@ -1,4 +1,4 @@
-const {getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount}= require('./backend')
+const {getAllDatav2,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
@@ -34,7 +34,12 @@ app.get('/DownloadCSV/:month/:client',(req,res)=>{
     res.status(404).send('File not found');
   }
 })
-
+app.post('/setAllDatav2/:clientID',async (req,res)=>{
+  const {clientID} = req.params
+  const {timer,brightness} = req.body
+  await setAllDataV2({timer,brightness},clientID)
+  res.send("Data saved");
+})
 app.post('/setAllData/:clientID',async (req,res)=>{
    const {clientID} = req.params
    const {battery,humidity,temprature,ServoStatus,timer} = req.body
@@ -44,6 +49,11 @@ app.post('/setAllData/:clientID',async (req,res)=>{
 app.get('/getAllData/:clientID',async(req,res)=>{
   const {clientID} = req.params
   const data = await getAllData(clientID)
+  res.send(data)
+})
+app.get('/getAllDataV2/:clientID',async(req,res)=>{
+  const {clientID} = req.params
+  const data = await getAllDatav2(clientID)
   res.send(data)
 })
 
