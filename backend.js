@@ -250,34 +250,39 @@ const setServo = async (clientID,mode)=>{
 const getBattery = async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/battery')
   const data = await ref.get()
-  return data.val()
+  const {mode} = data.val()
+  return mode
 }
 const getServo = async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/servo')
   const data = await ref.get()
-  return data.val()
+  const {mode} = data.val()
+  return mode
 }
 const getTemp = async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/temprature')
   const data = await ref.get()
-  return data.val()
+  const {mode} = data.val()
+  return mode
 }
 const getHum= async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/humidity')
   const data = await ref.get()
-  return data.val()
+  const {mode} = data.val()
+  return mode
 }
 const get_Timer= async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/timer')
   const data = await ref.get()
-  return data.val()
+  const {mode} = data.val()
+  return mode
 }
 const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},clientID)=>{
    await setBattery(clientID,battery)
    await setServo(clientID,ServoStatus)
    await setTemp(clientID,temprature)
    await setHum(clientID,humidity)
-   await setTimer(clientID,timer)
+   await set_timer(clientID,timer)
 }
 
 const getAllData = async(clientID)=>{
@@ -285,13 +290,8 @@ const getAllData = async(clientID)=>{
   let battery = await getBattery(clientID)
   let temp = await getTemp(clientID)
   let hum = await getHum(clientID)
-  let timer = await get_Timer()
-  servo = servo.mode
-  battery = battery.mode 
-  temp = temp.mode 
-  hum = hum.mode
-  timer = timre.mode
-  return {servo,battery,temp,hum}
+  let timer = await get_Timer(clientID)
+  return {servo,battery,temp,hum,timer}
 }
 
 module.exports = {getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
