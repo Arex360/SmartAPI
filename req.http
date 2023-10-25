@@ -1,5 +1,9 @@
-GET http://localhost:3001/checkLog/client1 HTTP/1.1
+GET http://localhost:3001/getalldata/client1 HTTP/1.1
 content-type: application/json
 
-{"msg":"sdhjhdsk"
+{
+    "battery":"0",
+    "humidity":"0",
+    "temprature": "40",
+    "ServoStatus":"1"
 }

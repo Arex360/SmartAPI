@@ -227,6 +227,16 @@ const setBattery = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/battery')
   await ref.set({mode})
 }
+
+const setTemp = async (clientID,mode)=>{
+  const ref = db.ref("config/"+clientID +'/temprature')
+  await ref.set({mode})
+}
+const setHum = async (clientID,mode)=>{
+  const ref = db.ref("config/"+clientID +'/humidity')
+  await ref.set({mode})
+}
+
 const setServo = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/servo')
   await ref.set({mode})
@@ -242,8 +252,30 @@ const getServo = async (clientID)=>{
   const data = await ref.get()
   return data.val()
 }
+const getTemp = async (clientID)=>{
+  const ref = db.ref("config/"+clientID +'/temprature')
+  const data = await ref.get()
+  return data.val()
+}
+const getHum= async (clientID)=>{
+  const ref = db.ref("config/"+clientID +'/humidity')
+  const data = await ref.get()
+  return data.val()
+}
 
+const setALLData = async ({ServoStatus,temprature,humidity,battery},clientID)=>{
+   await setBattery(clientID,battery)
+   await setServo(clientID,ServoStatus)
+   await setTemp(clientID,temprature)
+   await setHum(clientID,humidity)
+}
 
+const getAllData = async(clientID)=>{
+  const servo = await getServo(clientID)
+  const battery = await getBattery(clientID)
+  const temp = await getTemp(clientID)
+  const hum = await getHum(clientID)
+  return {servo,battery,temp,hum}
+}
 
-
-module.exports = {setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+module.exports = {getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
