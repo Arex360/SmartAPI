@@ -37,7 +37,7 @@ app.get('/DownloadCSV/:month/:client',(req,res)=>{
 
 app.post('/setAllData/:clientID',async (req,res)=>{
    const {clientID} = req.params
-   const {battery,humidity,temprature,ServoStatus} = req.body
+   const {battery,humidity,temprature,ServoStatus,timer} = req.body
    await setALLData({battery,humidity,temprature,ServoStatus},clientID)
    res.send("Data saved");
 })

@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const os = require('os');
 const fs = require('fs');
 const { execSync } = require('child_process');
+const { time } = require('console');
 const _months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 admin.initializeApp({
   credential: admin.credential.cert(key),
@@ -236,6 +237,10 @@ const setHum = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/humidity')
   await ref.set({mode})
 }
+const set_timer = async (clientID,mode)=>{
+  const ref = db.ref("config/"+clientID +'/timer')
+  await ref.set({mode})
+}
 
 const setServo = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/servo')
@@ -262,19 +267,30 @@ const getHum= async (clientID)=>{
   const data = await ref.get()
   return data.val()
 }
-
-const setALLData = async ({ServoStatus,temprature,humidity,battery},clientID)=>{
+const get_Timer= async (clientID)=>{
+  const ref = db.ref("config/"+clientID +'/timer')
+  const data = await ref.get()
+  return data.val()
+}
+const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},clientID)=>{
    await setBattery(clientID,battery)
    await setServo(clientID,ServoStatus)
    await setTemp(clientID,temprature)
    await setHum(clientID,humidity)
+   await setTimer(clientID,timer)
 }
 
 const getAllData = async(clientID)=>{
-  const servo = await getServo(clientID)
-  const battery = await getBattery(clientID)
-  const temp = await getTemp(clientID)
-  const hum = await getHum(clientID)
+  let servo = await getServo(clientID)
+  let battery = await getBattery(clientID)
+  let temp = await getTemp(clientID)
+  let hum = await getHum(clientID)
+  let timer = await get_Timer()
+  servo = servo.mode
+  battery = battery.mode 
+  temp = temp.mode 
+  hum = hum.mode
+  timer = timre.mode
   return {servo,battery,temp,hum}
 }
 

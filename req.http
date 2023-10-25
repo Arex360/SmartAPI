@@ -1,4 +1,4 @@
-GET http://localhost:3001/getalldata/client1 HTTP/1.1
+POST http://mnsstrap.ddns.net:3001/setalldata/client1 HTTP/1.1
 content-type: application/json
 
 {
