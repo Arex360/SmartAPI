@@ -135,6 +135,7 @@ app.get('/getBrightness/:clientID',async (req,res)=>{
 })
 app.get('/setTimer/:clientID/:timer', async (req,res)=>{
   const {clientID,timer} = req.params
+  console.log(`Updaing timer ${timer} at client ${clientID}`)
   const data = await setTimer(clientID,timer)
   res.send("updated")
 })

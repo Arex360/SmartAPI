@@ -278,7 +278,13 @@ const get_Timer= async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/timer')
   const data = await ref.get()
   const {mode} = data.val()
-  return mode
+  let out = ""
+  if(mode == null){
+    out = data.val()['timer']
+  }else{
+    out = mode
+  }
+  return out
 }
 const get_brightness= async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/brightness')

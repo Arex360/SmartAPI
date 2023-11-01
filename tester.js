@@ -9,6 +9,6 @@ const data = {
     }
 const host = 'http://mnsstrap.ddns.net:3001'
 const local = "http://localhost:3001"
-axios.post(local+'/setalldatav2/client1',data).then(data=>console.log(data.data)).catch(e=>console.log(e))
+axios.post(host+'/setalldatav2/client1',data).then(data=>console.log(data.data)).catch(e=>console.log(e))
 
-axios.get(local+'/getalldatav2/client1').then(res=>console.log(res.data))
+axios.get(host+'/getalldatav2/client1').then(res=>console.log(res.data))
