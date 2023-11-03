@@ -3,7 +3,7 @@ import csv
 import os
 import re
 import argparse  # Import the argparse module
-import pandas as pd
+
 # Create an argument parser
 parser = argparse.ArgumentParser(description="Merge JSON files in a specified directory")
 
@@ -67,10 +67,3 @@ with open(output_csv_file, 'w', newline='') as csv_file:
     csv_writer.writerows(data_dict.values())
 
 print("Merged data has been saved to", output_csv_file)
-df = pd.read_csv(output_csv_file)
-
-# Sort the DataFrame by the "day" column (assuming it's an integer)
-df.sort_values(by='day', inplace=True)
-
-# Write the sorted DataFrame back to a new CSV file
-df.to_csv(output_csv_file, index=False)
