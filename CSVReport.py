@@ -71,6 +71,7 @@ df = pd.read_csv(output_csv_file)
 
 # Sort the DataFrame by the "day" column (assuming it's an integer)
 df.sort_values(by='day', inplace=True)
+df.rename(columns={'Unnamed: 1': 'humidity', 'Unnamed: 2': 'temperature'}, inplace=True)
 
 # Write the sorted DataFrame back to a new CSV file
 df.to_csv(output_csv_file, index=False)
