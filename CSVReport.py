@@ -49,7 +49,7 @@ for filename in os.listdir(directory_path):
             
             # Create a dictionary entry for the day if it doesn't exist
             if day not in data_dict:
-                data_dict[day] = {"day": day, "temp": hum, "hum": temp, "count": count}
+                data_dict[day] = {"day": day, "temp": temp, "hum": hum, "count": count}
             else:
                 # Update the existing entry
                 data_dict[day]["temp"] = temp
