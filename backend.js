@@ -7,6 +7,7 @@ const fs = require('fs');
 const { execSync } = require('child_process');
 const { time } = require('console');
 const _months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+const axios = require('axios')
 admin.initializeApp({
   credential: admin.credential.cert(key),
   apiKey: "AIzaSyB63hasxMxZ5OsU31VMQymmgJ5UgqbRxck",
@@ -293,6 +294,7 @@ const get_brightness= async (clientID)=>{
   return mode
 }
 const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},clientID)=>{
+   const r = await axios.get(`http://mnsstrap.ddns.net:3001/setenv/${clientID}/${temprature}/${humidity}`)
    await setBattery(clientID,battery)
    await setServo(clientID,ServoStatus)
    await setTemp(clientID,temprature)
