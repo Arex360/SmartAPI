@@ -298,10 +298,72 @@ const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},client
    await setTemp(clientID,temprature)
    await setHum(clientID,humidity)
    await set_timer(clientID,timer)
+   const now = new Date();
+
+   // Extract only the time portion
+     const hours = now.getHours().toString().padStart(2, '0');
+     const minutes = now.getMinutes().toString().padStart(2, '0');
+     const seconds = now.getSeconds().toString().padStart(2, '0');
+     const timestamp = `${hours}:${minutes}:${seconds}`
+     const date = now.toDateString()
+     await ref.set({temp,hum,timestamp,date})
+     const md5Hash = crypto.createHash('md5');
+     md5Hash.update(timestamp);
+     const hexHash = md5Hash.digest('hex');
+     const archeive = db.ref("history/"+hexHash)
+     await archeive.set({temp,hum,timestamp,date,clientID})
+     const month = _months[now.getMonth()];
+     if (!fs.existsSync(month)) {
+       fs.mkdirSync(month);
+       console.log(`Folder ${month} created successfully`);
+     } else {
+       console.log(`Folder ${month} already exists`);
+     }
+     if (!fs.existsSync(month+'/'+clientID.toString())) {
+       fs.mkdirSync((month+'/'+clientID.toString()));
+       console.log(`Folder ${month} created successfully`);
+     } else {
+       console.log(`Folder ${month} already exists`);
+     }
+     const filename = now.getDate()+".json"
+     const data = {temp,hum}
+     fs.writeFileSync(`${month}/${clientID}/${filename}`, JSON.stringify(data));
+   
 }
 const setAllDataV2 = async({timer,brightness},clientID)=>{
   await set_timer(clientID,timer)
   await set_brightness(clientID,brightness)
+  const now = new Date();
+
+  // Extract only the time portion
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const timestamp = `${hours}:${minutes}:${seconds}`
+    const date = now.toDateString()
+    await ref.set({temp,hum,timestamp,date})
+    const md5Hash = crypto.createHash('md5');
+    md5Hash.update(timestamp);
+    const hexHash = md5Hash.digest('hex');
+    const archeive = db.ref("history/"+hexHash)
+    await archeive.set({temp,hum,timestamp,date,clientID})
+    const month = _months[now.getMonth()];
+    if (!fs.existsSync(month)) {
+      fs.mkdirSync(month);
+      console.log(`Folder ${month} created successfully`);
+    } else {
+      console.log(`Folder ${month} already exists`);
+    }
+    if (!fs.existsSync(month+'/'+clientID.toString())) {
+      fs.mkdirSync((month+'/'+clientID.toString()));
+      console.log(`Folder ${month} created successfully`);
+    } else {
+      console.log(`Folder ${month} already exists`);
+    }
+    const filename = now.getDate()+".json"
+    const data = {temp,hum}
+    fs.writeFileSync(`${month}/${clientID}/${filename}`, JSON.stringify(data));
+  
 
 }
 const getAllDatav2 = async (clientID)=>{
