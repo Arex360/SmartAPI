@@ -147,7 +147,18 @@ app.get('/getTimer/:clientID',async (req,res)=>{
    else
     res.send(3000)
 })
-
+app.get('/setbrightness/:clientid/:brightness',async (req,res)=>{
+    const status = await setBrightness(req.params.clientid,req.params.brightness)
+    res.send("ok")
+})
+app.get('/getbrightness/:clientid', async (req,res)=>{
+  const brightness = await getBrightness(req.params.clientid)
+  res.send(brightness)
+})
+app.get('/getbatteryv2/:clientid',async (req,res)=>{
+  const battery = await getBattery(req.params.clientid)
+  res.send(battery)
+})
 app.get("/setEnv/:clientID/:temp/:hum",async (req,res)=>{
   const {hum,temp,clientID} = req.params
   await setWeather(clientID,hum,temp)
