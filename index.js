@@ -1,4 +1,4 @@
-const {getAllDatav2,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount}= require('./backend')
+const {getAllDatav2,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
@@ -46,6 +46,10 @@ app.post('/setAllData/:clientID',async (req,res)=>{
    await setALLData({battery,humidity,temprature,ServoStatus,timer},clientID)
    res.send("Data saved");
 })
+app.get('/setServo/:clientID', async (req,res)=>{
+  const snap = await setServo(req.params.clientID,1)
+  res.send("OK")
+})
 app.get('/getAllData/:clientID',async(req,res)=>{
   const {clientID} = req.params
   const data = await getAllData(clientID)
@@ -90,12 +94,12 @@ app.get('/getMode/:clientID',async(req,res)=>{
   }else{
     res.send(0)
   }
-})
+})/*
 app.get('/setBrightness/:clientID/:state',async (req,res)=>{
   const {clientID,state} = req.params
   await setBrightness(clientID,state)
   res.send('done')
-})
+})*/
 app.get('/setVoltage/:clientID/:state',async (req,res)=>{
   const {clientID,state} = req.params
   await setVoltage(clientID,state)
@@ -149,7 +153,7 @@ app.get('/getTimer/:clientID',async (req,res)=>{
 })
 app.get('/setbrightness/:clientID/:brightness',async (req,res)=>{
     const {clientID,brightness} = req.params
-    const status = await setBrightness(clientID,brightness)
+    const status = await set_brightness(clientID,brightness)
     res.send("ok")
 })
 app.get('/getbrightness/:clientid', async (req,res)=>{
