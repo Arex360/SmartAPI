@@ -158,7 +158,7 @@ app.get('/getbrightness/:clientid', async (req,res)=>{
 })
 app.get('/getbatteryv2/:clientid',async (req,res)=>{
   const battery = await getBattery(req.params.clientid)
-  res.send(battery)
+  res.send({value:parseInt(battery)})
 })
 app.get("/setEnv/:clientID/:temp/:hum",async (req,res)=>{
   const {hum,temp,clientID} = req.params
