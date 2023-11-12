@@ -291,7 +291,10 @@ const get_brightness= async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/brightness')
   const data = await ref.get()
   const {mode} = data.val()
-  return mode
+  if(mode != undefined)
+    return mode
+  else 
+    return data.val()
 }
 const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},clientID)=>{
    const r = await axios.get(`http://mnsstrap.ddns.net:3001/setenv/${clientID}/${temprature}/${humidity}`)
