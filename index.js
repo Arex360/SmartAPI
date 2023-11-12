@@ -147,8 +147,9 @@ app.get('/getTimer/:clientID',async (req,res)=>{
    else
     res.send(3000)
 })
-app.get('/setbrightness/:clientid/:brightness',async (req,res)=>{
-    const status = await setBrightness(req.params.clientid,req.params.brightness)
+app.get('/setbrightness/:clientID/:brightness',async (req,res)=>{
+    const {clientID,brightness} = req.params
+    const status = await setBrightness(clientID,brightness)
     res.send("ok")
 })
 app.get('/getbrightness/:clientid', async (req,res)=>{
