@@ -335,6 +335,13 @@ const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},client
      fs.writeFileSync(`${month}/${clientID}/${filename}`, JSON.stringify(data));
    
 }
+const setOnlyTimer = async({timer},clientID)=>{
+  await set_timer(clientID,timer)
+}
+const getOnlyTimer = async (clientID) =>{
+  let timer = await get_Timer(clientID)
+  return timer
+}
 const setAllDataV2 = async({timer,brightness},clientID)=>{
   await set_timer(clientID,timer)
   await set_brightness(clientID,brightness)
@@ -386,4 +393,4 @@ const getAllData = async(clientID)=>{
   return {servo,battery,temp,hum,timer}
 }
 
-module.exports = {get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+module.exports = {setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
