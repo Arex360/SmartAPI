@@ -302,7 +302,7 @@ const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},client
    await setServo(clientID,ServoStatus)
    await setTemp(clientID,temprature)
    await setHum(clientID,humidity)
-   await set_timer(clientID,timer)
+   //await set_timer(clientID,timer)
    const now = new Date();
 
    // Extract only the time portion
@@ -343,7 +343,7 @@ const getOnlyTimer = async (clientID) =>{
   return timer
 }
 const setAllDataV2 = async({timer,brightness},clientID)=>{
-  await set_timer(clientID,timer)
+ // await set_timer(clientID,timer)
   await set_brightness(clientID,brightness)
   const now = new Date();
 
