@@ -246,6 +246,10 @@ const set_brightness = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/brightness')
   await ref.set({mode})
 }
+const set_chunk = async (clientID,mode)=>{
+  const ref = db.ref("config/"+clientID +'/chunk')
+  await ref.set({mode})
+}
 const setServo = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/servo')
   await ref.set({mode})
@@ -289,6 +293,15 @@ const get_Timer= async (clientID)=>{
 }
 const get_brightness= async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/brightness')
+  const data = await ref.get()
+  const {mode,state} = data.val()
+  if(mode != undefined)
+    return mode
+  else 
+    return state
+}
+const get_chunk= async (clientID)=>{
+  const ref = db.ref("config/"+clientID +'/chunk')
   const data = await ref.get()
   const {mode,state} = data.val()
   if(mode != undefined)
@@ -381,7 +394,8 @@ const setAllDataV2 = async({timer,brightness},clientID)=>{
 const getAllDatav2 = async (clientID)=>{
   let timer = await get_Timer(clientID)
   let brightness = await get_brightness(clientID)
-  return ({timer,brightness})
+  let chunk = await get_chunk(clientID)
+  return ({timer,brightness,chunk})
 }
 
 const getAllData = async(clientID)=>{
@@ -393,4 +407,4 @@ const getAllData = async(clientID)=>{
   return {servo,battery,temp,hum,timer}
 }
 
-module.exports = {setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+module.exports = {set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
