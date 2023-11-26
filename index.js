@@ -152,7 +152,7 @@ app.get('/getTimer/:clientID',async (req,res)=>{
    const {clientID} = req.params
    const data = await getOnlyTimer(clientID)
    if(data)
-    res.send(data.toString())
+    res.send(`${data}`)
    else
     res.send(3000)
 })
