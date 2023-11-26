@@ -395,6 +395,7 @@ const getAllDatav2 = async (clientID)=>{
   let timer = await get_Timer(clientID)
   let brightness = await get_brightness(clientID)
   let chunk = await get_chunk(clientID)
+  timer = timer.toString();
   return ({timer,brightness,chunk})
 }
 
@@ -404,6 +405,7 @@ const getAllData = async(clientID)=>{
   let temp = await getTemp(clientID)
   let hum = await getHum(clientID)
   let timer = await get_Timer(clientID)
+  timer = timer.toString();
   return {servo,battery,temp,hum,timer}
 }
 
