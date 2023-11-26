@@ -353,7 +353,7 @@ const setOnlyTimer = async({timer},clientID)=>{
 }
 const getOnlyTimer = async (clientID) =>{
   let timer = await get_Timer(clientID)
-  return timer
+  return timer.toString()
 }
 const setAllDataV2 = async({timer,brightness},clientID)=>{
  // await set_timer(clientID,timer)
