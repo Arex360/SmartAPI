@@ -8,11 +8,18 @@ const fs = require('fs')
 const { execSync } = require('child_process')
 const path = require('path')
 const app = express()
+const axios = require('axios')
 app.use(cors())
 app.use(bodyparser())
 const date = new Date()
 //console.log(date.getDate())
 app.get('/',(req,res)=>res.send('welcome'))
+app.get('/reg/:clientID',async (req,res)=>{
+  const {clientID} = req.params
+  let a = await axios.get(`http://localhost:5000/setmodel/${clientID}/0`)
+  let b = await axios.get(`http://localhost:3001/setmode/${clientID}/0`)
+  res.send("done")
+})
 app.get('/DownloadCSV/:month/:client',(req,res)=>{
   const {client,month} =req.params
   console.log(`${client} is power`)
@@ -235,6 +242,7 @@ app.get('/setServo/:clientid/:mode',async (req,res)=>{
   const result = await setServo(clientid,mode)
   res.send("done")
 })
+app.get('/testx',(req,res)=>res.send("0"))
 app.listen(3001,()=>{
   console.log('server started')
 })
