@@ -18,6 +18,7 @@ app.get('/reg/:clientID',async (req,res)=>{
   const {clientID} = req.params
   let a = await axios.get(`http://localhost:5000/setmodel/${clientID}/0`)
   let b = await axios.get(`http://localhost:3001/setmode/${clientID}/0`)
+  let c = await setDebug(clientID,"false")
   res.send("done")
 })
 app.get('/setdebug/:clientID/:result',async(req,res)=>{
