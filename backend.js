@@ -411,8 +411,9 @@ const getAllDatav2 = async (clientID)=>{
   let timer = await get_Timer(clientID)
   let brightness = await get_brightness(clientID)
   let chunk = await get_chunk(clientID)
+  let devMode = await getDebug(clientID)
   timer = timer.toString();
-  return ({timer,brightness,chunk})
+  return ({timer,brightness,chunk,devMode})
 }
 
 const getAllData = async(clientID)=>{
@@ -421,8 +422,9 @@ const getAllData = async(clientID)=>{
   let temp = await getTemp(clientID)
   let hum = await getHum(clientID)
   let timer = await get_Timer(clientID)
+  let devMode = await getDebug(clientID)
   timer = timer.toString();
-  return {servo,battery,temp,hum,timer}
+  return {servo,battery,temp,hum,timer,devMode}
 }
 
 module.exports = {setDebug,getDebug,set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
