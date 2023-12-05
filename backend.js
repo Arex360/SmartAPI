@@ -254,12 +254,25 @@ const setServo = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/servo')
   await ref.set({mode})
 }
+const setDebug = async (clientID,mode)=>{
+  const ref = db.ref("config/"+clientID +'/debug')
+  await ref.set({mode})
+}
 
 const getBattery = async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/battery')
   const data = await ref.get()
   const {mode} = data.val()
   return mode
+}
+const getDebug = async (clientID)=>{
+  const ref = db.ref("config/"+clientID +'/debug')
+  const data = await ref.get()
+  const {mode} = data.val()
+  if(mode == null || mode == undefined){
+    return "false"
+  }else
+    return mode
 }
 const getServo = async (clientID)=>{
   const ref = db.ref("config/"+clientID +'/servo')
@@ -409,4 +422,4 @@ const getAllData = async(clientID)=>{
   return {servo,battery,temp,hum,timer}
 }
 
-module.exports = {set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+module.exports = {setDebug,getDebug,set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}

@@ -1,4 +1,4 @@
-const {getAllDatav2,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness, get_brightness, setOnlyTimer, getOnlyTimer, set_chunk}= require('./backend')
+const {getAllDatav2,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness, get_brightness, setOnlyTimer, getOnlyTimer, set_chunk, setDebug, getDebug}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
@@ -19,6 +19,16 @@ app.get('/reg/:clientID',async (req,res)=>{
   let a = await axios.get(`http://localhost:5000/setmodel/${clientID}/0`)
   let b = await axios.get(`http://localhost:3001/setmode/${clientID}/0`)
   res.send("done")
+})
+app.get('/setdebug/:clientID/:result',async(req,res)=>{
+    const {clientID,result} = req.params
+    await setDebug(clientID,result)
+    res.send("done")
+})
+app.get('/getDebug/:clientID',async(req,res)=>{
+  const {clientID} = req.params
+  let result = await getDebug(clientID)
+  res.send(result)
 })
 app.get('/DownloadCSV/:month/:client',(req,res)=>{
   const {client,month} =req.params
