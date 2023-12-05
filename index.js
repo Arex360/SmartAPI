@@ -18,14 +18,6 @@ app.get('/reg/:clientID',async (req,res)=>{
   const {clientID} = req.params
   let a = await axios.get(`http://localhost:5000/setmodel/${clientID}/0`)
   let b = await axios.get(`http://localhost:3001/setmode/${clientID}/0`)
-  let battery = "0"
-  let humidity = "0"
-  let temprature = "0"
-  let ServoStatus = "0"
-  let timer = "0"
-  let brightness = "0"
-  await setALLData({battery,humidity,temprature,ServoStatus,timer},clientID)
-  await setAllDataV2({timer,brightness},clientID)
   let c = await setDebug(clientID,"false")
   res.send("done")
 })
