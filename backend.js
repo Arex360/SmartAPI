@@ -256,9 +256,9 @@ const setServo = async (clientID,mode)=>{
 }
 const setDebug = async (clientID,mode)=>{
   const ref = db.ref("config/"+clientID +'/debug')
-  if(mode == "true"){
-    await set_timer(clientID,"1")
-  }
+  //if(mode == "true"){
+    //await set_timer(clientID,"1")
+  //}
   await ref.set({mode})
 }
 
