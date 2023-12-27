@@ -19,6 +19,7 @@ app.get('/reg/:clientID',async (req,res)=>{
   let a = await axios.get(`http://localhost:5000/setmodel/${clientID}/0`)
   let b = await axios.get(`http://localhost:3001/setmode/${clientID}/0`)
   let e = await axios.get(`http://localhost:3001/setTimer/${clientID}/5`)
+  let f = await axios.get(`http://localhost:3001/setChunk/${clientID}/50`)
   let c = await setDebug(clientID,"false")
   res.send("done")
 })
