@@ -331,6 +331,8 @@ const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},client
    await setServo(clientID,ServoStatus)
    await setTemp(clientID,temprature)
    await setHum(clientID,humidity)
+   let temp = temprature
+   let hum = humidity
    //await set_timer(clientID,timer)
    const now = new Date();
 
@@ -340,12 +342,12 @@ const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},client
      const seconds = now.getSeconds().toString().padStart(2, '0');
      const timestamp = `${hours}:${minutes}:${seconds}`
      const date = now.toDateString()
-     await ref.set({temp,hum,timestamp,date})
+    // await ref.set({temp,hum,timestamp,date})
      const md5Hash = crypto.createHash('md5');
      md5Hash.update(timestamp);
      const hexHash = md5Hash.digest('hex');
      const archeive = db.ref("history/"+hexHash)
-     await archeive.set({temp,hum,timestamp,date,clientID})
+     //await archeive.set({temp,hum,timestamp,date,clientID})
      const month = _months[now.getMonth()];
      if (!fs.existsSync(month)) {
        fs.mkdirSync(month);
@@ -375,19 +377,20 @@ const setAllDataV2 = async({timer,brightness},clientID)=>{
  // await set_timer(clientID,timer)
   await set_brightness(clientID,brightness)
   const now = new Date();
-
+  let temp = temprature
+  let hum = humidity
   // Extract only the time portion
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const seconds = now.getSeconds().toString().padStart(2, '0');
     const timestamp = `${hours}:${minutes}:${seconds}`
     const date = now.toDateString()
-    await ref.set({temp,hum,timestamp,date})
+    //await ref.set({temp,hum,timestamp,date})
     const md5Hash = crypto.createHash('md5');
     md5Hash.update(timestamp);
     const hexHash = md5Hash.digest('hex');
-    const archeive = db.ref("history/"+hexHash)
-    await archeive.set({temp,hum,timestamp,date,clientID})
+    //const archeive = db.ref("history/"+hexHash)
+    //await archeive.set({temp,hum,timestamp,date,clientID})
     const month = _months[now.getMonth()];
     if (!fs.existsSync(month)) {
       fs.mkdirSync(month);
