@@ -20,7 +20,6 @@ app.get('/reg/:clientID',async (req,res)=>{
   let b = await axios.get(`http://localhost:3001/setmode/${clientID}/0`)
   let e = await axios.get(`http://localhost:3001/setTimer/${clientID}/5`)
   let f = await axios.get(`http://localhost:3001/setChunk/${clientID}/50`)
-  let h = await axios.post(`http://localhost:3001/setalldata/${clientID}`,{ServoStatus:1,temprature:1,humidity:1,battery:1})
   let c = await setDebug(clientID,"false")
   res.send("done")
 })
