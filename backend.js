@@ -378,7 +378,7 @@ const setAllDataV2 = async({timer,brightness},clientID)=>{
   await set_brightness(clientID,brightness)
 }
 const getAllDatav2 = async (clientID)=>{
-  let timer = await get_Timer(clientID)
+  let timer = await getOnlyTimer(clientID)
   let brightness = await get_brightness(clientID)
   let chunk = await get_chunk(clientID)
   let devMode = await getDebug(clientID)
@@ -391,7 +391,7 @@ const getAllData = async(clientID)=>{
   let battery = await getBattery(clientID)
   let temp = await getTemp(clientID)
   let hum = await getHum(clientID)
-  let timer = await get_Timer(clientID)
+  let timer = await getOnlyTimer(clientID)
   let devMode = await getDebug(clientID)
   timer = timer.toString();
   return {servo,battery,temp,hum,timer,devMode}
