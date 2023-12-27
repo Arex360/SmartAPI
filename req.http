@@ -1,9 +1,6 @@
-POST http://mnsstrap.ddns.net:3001/setalldata/client20 HTTP/1.1
+POST http://localhost:3001/setalldatav2/client20 HTTP/1.1
 content-type: application/json
 
 {
-    "battery":"101",
-    "humidity":"0",
-    "temprature": "40",
-    "ServoStatus":"10"
+    "brightness": "100"
 }
