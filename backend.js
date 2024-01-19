@@ -7,7 +7,8 @@ const fs = require('fs');
 const { execSync } = require('child_process');
 const { time } = require('console');
 const _months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-const axios = require('axios')
+const axios = require('axios');
+const readJsonFiles = require('./model');
 admin.initializeApp({
   credential: admin.credential.cert(key),
   apiKey: "AIzaSyB63hasxMxZ5OsU31VMQymmgJ5UgqbRxck",
@@ -325,6 +326,12 @@ const get_chunk= async (clientID)=>{
   else 
     return state
 }
+const GetEnvChart = ({clientID})=>{
+  const now = new Date()
+  const month = _months[now.getMonth()]
+  const details = readJsonFiles(`${month}/${clientID}`)
+  return details
+}
 const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},clientID)=>{
    const r = await axios.get(`http://mnsstrap.ddns.net:3001/setenv/${clientID}/${temprature}/${humidity}`)
    await setBattery(clientID,battery)
@@ -397,4 +404,4 @@ const getAllData = async(clientID)=>{
   return {servo,battery,temp,hum,timer,devMode}
 }
 
-module.exports = {setDebug,getDebug,set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+module.exports = {GetEnvChart,setDebug,getDebug,set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}

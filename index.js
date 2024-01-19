@@ -1,4 +1,4 @@
-const {getAllDatav2,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness, get_brightness, setOnlyTimer, getOnlyTimer, set_chunk, setDebug, getDebug}= require('./backend')
+const {getAllDatav2,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness, get_brightness, setOnlyTimer, getOnlyTimer, set_chunk, setDebug, getDebug, GetEnvChart}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
@@ -14,6 +14,11 @@ app.use(bodyparser())
 const date = new Date()
 //console.log(date.getDate())
 app.get('/',(req,res)=>res.send('welcome'))
+app.get('/chart/:clientID', async (req,res)=>{
+    const {clientID} = req.params
+    const data = GetEnvChart({clientID})
+    res.send(data)
+})
 app.get('/reg/:clientID',async (req,res)=>{
   const {clientID} = req.params
   let a = await axios.get(`http://localhost:5000/setmodel/${clientID}/0`)
