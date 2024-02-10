@@ -95,7 +95,10 @@ let setWeather = async (clientID,temp,hum)=>{
   const minutes = now.getMinutes().toString().padStart(2, '0');
   const seconds = now.getSeconds().toString().padStart(2, '0');
   const timestamp = `${hours}:${minutes}:${seconds}`
-  const date = now.toDateString()
+  let date = now.toDateString()
+  const options = { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true,hour24:false };
+  date =  now.toLocaleString('en-US', options);
+  console.log(date)
   await ref.set({temp,hum,timestamp,date})
   const md5Hash = crypto.createHash('md5');
   md5Hash.update(timestamp);
