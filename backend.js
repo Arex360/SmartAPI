@@ -406,5 +406,31 @@ const getAllData = async(clientID)=>{
   timer = timer.toString();
   return {servo,battery,temp,hum,timer,devMode}
 }
+function timeAgo(timestamp) {
+  const currentDate = new Date();
+  const providedDate = new Date(timestamp * 1000); // Convert seconds to milliseconds
 
-module.exports = {GetEnvChart,setDebug,getDebug,set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+  const timeDifference = currentDate - providedDate;
+  const seconds = Math.floor(timeDifference / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (seconds < 60) {
+    return seconds + ' seconds ago';
+  } else if (minutes < 60) {
+    return minutes + ' minutes ago';
+  } else if (hours < 24) {
+    return hours + ' hours ago';
+  } else {
+    return days + ' days ago';
+  }
+}
+const getLastImageTime = async({clientID})=>{
+  let res = await axios.get(`http://mnsstrap.ddns.net:5000/Getdetection/${clientID}/date`)
+  res = res.data 
+  console.log(res)
+  return timeAgo(res)
+  
+}
+module.exports = {getLastImageTime,GetEnvChart,setDebug,getDebug,set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
