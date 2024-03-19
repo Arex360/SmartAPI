@@ -433,4 +433,21 @@ const getLastImageTime = async({clientID})=>{
   return timeAgo(res)
   
 }
-module.exports = {getLastImageTime,GetEnvChart,setDebug,getDebug,set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+
+const getUserAccounts = async()=>{
+  const data = await firestore.collection("users")
+  let snapshot = await data.get()
+  snapshot = snapshot.docs 
+  let users = []
+  snapshot.forEach(shot=>{
+     users.push(shot.data())
+  })
+  return users
+}
+const getTraps = async({id})=>{
+  const data = db.ref("accounts/"+id)
+  let snapshot = await data.get()
+  console.log(snapshot.val())
+  return snapshot.val()
+}
+module.exports = {getTraps,getUserAccounts,getLastImageTime,GetEnvChart,setDebug,getDebug,set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
