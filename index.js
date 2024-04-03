@@ -20,7 +20,7 @@ app.get('/setQuality/:clientID/:quality',async (req,res)=>{
   res.send("ok")
 })
 app.get('/getQuality/:clientID',async (req,res)=>{
-  const {clientID} = req.clientID
+  const {clientID} = req.params
   let data = await getQuality(clientID)
   res.send(data)
 })
