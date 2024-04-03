@@ -35,6 +35,11 @@ const setVoltage = async(clientID,state)=>{
   const ref =db.ref("config/"+clientID+'/voltage')
   await ref.set({state})  
 }
+const getVoltage = async(clientID,state)=>{
+  const ref =db.ref("config/"+clientID+'/voltage')
+  const data = await ref.get()
+  return data.val() 
+}
 const getQuality = async(clientID)=>{
   const ref = db.ref("config/"+clientID+'/quality')
   const data = await ref.get()
