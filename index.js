@@ -22,7 +22,8 @@ app.get('/setQuality/:clientID/:quality',async (req,res)=>{
 app.get('/getQuality/:clientID',async (req,res)=>{
   const {clientID} = req.params
   let data = await getQuality(clientID)
-  res.send(data)
+  let {quality} = data
+  res.send(quality)
 })
 app.get('/listTraps/:email',async(req,res)=>{
   const data = await getTraps({id:req.params.email})
