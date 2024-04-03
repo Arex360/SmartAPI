@@ -1,4 +1,4 @@
-const {getTraps,getUserAccounts,getAllDatav2,getLastImageTime,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness, get_brightness, setOnlyTimer, getOnlyTimer, set_chunk, setDebug, getDebug, GetEnvChart}= require('./backend')
+const {setQuality,getQuality,getTraps,getUserAccounts,getAllDatav2,getLastImageTime,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness, get_brightness, setOnlyTimer, getOnlyTimer, set_chunk, setDebug, getDebug, GetEnvChart}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
@@ -14,6 +14,16 @@ app.use(bodyparser())
 const date = new Date()
 //console.log(date.getDate())
 app.get('/',(req,res)=>res.send('welcome'))
+app.get('/setQuality/:clientID/:quality',async (req,res)=>{
+  const {clientID,quality} = req.params
+  let data = await setQuality(clientID,quality)
+  res.send("ok")
+})
+app.get('/getQuality/:clientID',async (req,res)=>{
+  const {clientID} = req.clientID
+  let data = await getQuality(clientID)
+  res.send(data)
+})
 app.get('/listTraps/:email',async(req,res)=>{
   const data = await getTraps({id:req.params.email})
   res.send(data)
