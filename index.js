@@ -1,4 +1,4 @@
-const {requestDeletion,getTraps,getUserAccounts,getAllDatav2,getLastImageTime,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness, get_brightness, setOnlyTimer, getOnlyTimer, set_chunk, setDebug, getDebug, GetEnvChart}= require('./backend')
+const {setQuality,getQuality,getTraps,getUserAccounts,getAllDatav2,getLastImageTime,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness, get_brightness, setOnlyTimer, getOnlyTimer, set_chunk, setDebug, getDebug, GetEnvChart, requestDeletion}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
@@ -14,6 +14,22 @@ app.use(bodyparser())
 const date = new Date()
 //console.log(date.getDate())
 app.get('/',(req,res)=>res.send('welcome'))
+app.post('/requestDeletion',async(req,res)=>{
+   const {email}= req.body 
+   const snap = await requestDeletion(email)
+   res.send("ok")
+})
+app.get('/setQuality/:clientID/:quality',async (req,res)=>{
+  const {clientID,quality} = req.params
+  let data = await setQuality(clientID,quality)
+  res.send("ok")
+})
+app.get('/getQuality/:clientID',async (req,res)=>{
+  const {clientID} = req.params
+  let data = await getQuality(clientID)
+  let {quality} = data
+  res.send(quality)
+})
 app.get('/listTraps/:email',async(req,res)=>{
   const data = await getTraps({id:req.params.email})
   res.send(data)
@@ -30,11 +46,6 @@ app.get('/chart/:clientID', async (req,res)=>{
 app.get('/getLastImage/:clientID',async(req,res)=>{
   let msg = await getLastImageTime({clientID:req.params.clientID})
   res.send(msg)
-})
-app.post('/request',async(req,res)=>{
-  const {email,note} = req.body
-  const snap = await requestDeletion(email,note)
-  res.send("ok")
 })
 app.get('/reg/:clientID',async (req,res)=>{
   const {clientID} = req.params
