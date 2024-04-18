@@ -1,4 +1,4 @@
-const {getTraps,getUserAccounts,getAllDatav2,getLastImageTime,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness, get_brightness, setOnlyTimer, getOnlyTimer, set_chunk, setDebug, getDebug, GetEnvChart}= require('./backend')
+const {requestDeletion,getTraps,getUserAccounts,getAllDatav2,getLastImageTime,setAllDataV2,getAllData,setALLData,getBattery,getServo,setBattery,setServo,GetCSV,getMode,setMode,getHumidity,getTempreture,getPin,setPin,getTimer,setTimer,setWeather,getBrightness,getCurrent,getVoltage,setBrightness,setCurrent,setVoltage, setBoxState, getBoxState, getWeather, setCount, set_brightness, get_brightness, setOnlyTimer, getOnlyTimer, set_chunk, setDebug, getDebug, GetEnvChart}= require('./backend')
 const express = require('express')
 const crypto = require('crypto')
 const bodyparser = require('body-parser')
@@ -30,6 +30,11 @@ app.get('/chart/:clientID', async (req,res)=>{
 app.get('/getLastImage/:clientID',async(req,res)=>{
   let msg = await getLastImageTime({clientID:req.params.clientID})
   res.send(msg)
+})
+app.post('/request',async(req,res)=>{
+  const {email,note} = req.body
+  const snap = await requestDeletion(email,note)
+  res.send("ok")
 })
 app.get('/reg/:clientID',async (req,res)=>{
   const {clientID} = req.params

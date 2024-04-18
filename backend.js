@@ -27,6 +27,10 @@ const setPin = async(clientID,pinID,state)=>{
     const ref =db.ref("config/"+clientID+'/'+pinID)
     await ref.set({state})  
 }
+const requestDeletion = async(email,note)=>{
+  const ref =db.ref("deletion/")
+  await ref.set({"note":email})  
+}
 const setVoltage = async(clientID,state)=>{
   const ref =db.ref("config/"+clientID+'/voltage')
   await ref.set({state})  
@@ -450,4 +454,4 @@ const getTraps = async({id})=>{
   console.log(snapshot.val())
   return snapshot.val()
 }
-module.exports = {getTraps,getUserAccounts,getLastImageTime,GetEnvChart,setDebug,getDebug,set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
+module.exports = {requestDeletion,getTraps,getUserAccounts,getLastImageTime,GetEnvChart,setDebug,getDebug,set_chunk,setOnlyTimer,getOnlyTimer,get_brightness,set_brightness,setServo,getBattery,setBrightness,setAllDataV2,getAllDatav2,getAllData,setALLData,setBattery,setServo,getBattery,getServo,GetCSV,setCount,getWeather,setBoxState,getBoxState,setMode,getMode,getTempreture,getHumidity,setPin,getPin,setTimer,getTimer,setWeather,setVoltage,getVoltage,setBrightness,getBrightness,setCurrent,getCurrent}
