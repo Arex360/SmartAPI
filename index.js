@@ -13,6 +13,16 @@ app.use(cors())
 app.use(bodyparser())
 const date = new Date()
 //console.log(date.getDate())
+let myKey = {}
+app.get('/setKey/:Key/:value',(req,res)=>{
+  let {Key,value} = req.params
+  myKey[Key] = value
+  res.send("OK")
+})
+app.get('/getKey/:key',(req,res)=>{
+  let {key} = req.params
+  res.send(myKey[key])
+})
 app.get('/',(req,res)=>res.send('welcome'))
 app.post('/requestDeletion',async(req,res)=>{
    const {email}= req.body 
