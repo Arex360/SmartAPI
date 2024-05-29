@@ -417,7 +417,7 @@ const getAllData = async(clientID)=>{
   let timer = await getOnlyTimer(clientID)
   let devMode = await getDebug(clientID)
   timer = timer.toString();
-  return {servo,battery,temp,hum,timer,devMode}
+  return {servo,battery,temp,hum,timer,devMode,res:'SVGA'}
 }
 function timeAgo(timestamp) {
   const currentDate = new Date();
