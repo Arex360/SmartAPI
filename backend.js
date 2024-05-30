@@ -406,7 +406,7 @@ const getAllDatav2 = async (clientID)=>{
   let chunk = await get_chunk(clientID)
   let devMode = await getDebug(clientID)
   timer = timer.toString();
-  return ({timer,brightness,chunk,devMode})
+  return ({timer,brightness,chunk,devMode,res:'SVGA'})
 }
 
 const getAllData = async(clientID)=>{
