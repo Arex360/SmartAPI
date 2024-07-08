@@ -372,7 +372,7 @@ const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},client
    const now = new Date();
    const _timestamp = Date.now();
    console.log(_timestamp)
-   const insertBatteryQuery = `INSERT INTO battery (value, time, client,temp,hum) VALUES (${battery}, ${_timestamp}, "${clientID}".${Math.floor(temprature)},${Math.floor(humidity)})`;
+   const insertBatteryQuery = `INSERT INTO battery (value, time, client,temp,hum) VALUES (${battery}, ${_timestamp}, "${clientID}",${Math.floor(temprature)},${Math.floor(humidity)})`;
    con.query(insertBatteryQuery,(err, result)=>{
     if(err){
       console.log(err)
@@ -410,6 +410,7 @@ const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},client
      fs.writeFileSync(`${month}/${clientID}/${filename}`, JSON.stringify(data));
    
 }
+setALLData({ServoStatus:1,temprature:1,humidity:1,battery:1,timer:1},'client1')
 const setOnlyTimer = async({timer},clientID)=>{
   await set_timer(clientID,timer)
 }
