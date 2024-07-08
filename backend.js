@@ -372,7 +372,7 @@ const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},client
    const now = new Date();
    const _timestamp = Date.now();
    console.log(_timestamp)
-   const insertBatteryQuery = `INSERT INTO battery (value, time, client) VALUES (${battery}, ${_timestamp}, "${clientID}")`;
+   const insertBatteryQuery = `INSERT INTO battery (value, time, client,temp,hum) VALUES (${battery}, ${_timestamp}, "${clientID}".${Math.floor(temprature)},${Math.floor(humidity)})`;
    con.query(insertBatteryQuery,(err, result)=>{
     if(err){
       console.log(err)
