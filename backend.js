@@ -9,6 +9,18 @@ const { time } = require('console');
 const _months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 const axios = require('axios');
 const readJsonFiles = require('./model');
+var mysql = require('mysql');
+var con = mysql.createConnection({
+  host: "129.151.145.229",
+  user: "arex",
+  password: "123",
+  database:"smart"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 admin.initializeApp({
   credential: admin.credential.cert(key),
   apiKey: "AIzaSyB63hasxMxZ5OsU31VMQymmgJ5UgqbRxck",
@@ -358,7 +370,16 @@ const setALLData = async ({ServoStatus,temprature,humidity,battery,timer},client
    let hum = humidity
    //await set_timer(clientID,timer)
    const now = new Date();
-
+   const _timestamp = Date.now();
+   console.log(_timestamp)
+   const insertBatteryQuery = `INSERT INTO battery (value, time, client) VALUES (${battery}, ${_timestamp}, "${clientID}")`;
+   con.query(insertBatteryQuery,(err, result)=>{
+    if(err){
+      console.log(err)
+    }else{
+      console.log("inserted");
+    }
+   })
    // Extract only the time portion
      const hours = now.getHours().toString().padStart(2, '0');
      const minutes = now.getMinutes().toString().padStart(2, '0');
